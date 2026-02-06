@@ -11,7 +11,7 @@ prev.addEventListener('click', () => {
         progress--;
     }
 
-    renderProgress('backward');
+    renderProgress();
 });
 
 next.addEventListener('click', () => {
@@ -19,37 +19,29 @@ next.addEventListener('click', () => {
         progress++;
     }
 
-    renderProgress('forward');
+    renderProgress();
 });
 
-function renderProgress(direction) {
-    if(direction === 'backward') {
-        labels.forEach((label, index) => {
-            if(index >= progress) {
-                label.classList.remove('progress');
-            }
-        });
-        connectors.forEach((connecter, index) => {
-            if(index >= progress -1) {
-                connecter.classList.remove('progress-bar');
-            }
-        });
-    } else {
-        labels.forEach((label, index) => {
-            if(index < progress) {
-                label.classList.add('progress');
-            }
-        });
-        connectors.forEach((connecter, index) => {
-            if(index < progress - 1) {
-                connecter.classList.add('progress-bar');
-            }
-        });
-    }
+function renderProgress() {
+    labels.forEach((label, index) => {
+        if(index >= progress) {
+            label.classList.remove('progress');
+        } else if(index < progress) {
+            label.classList.add('progress');
+        }
+    });
+
+    connectors.forEach((connecter, index) => {
+        if(index >= progress -1) {
+            connecter.classList.remove('progress-bar');
+        } else if(index < progress - 1) {
+            connecter.classList.add('progress-bar');
+        }
+    });
 
     if(progress === 4) {
         next.classList.add('disabled');
-    }else if(progress === 1) {
+    } else if(progress === 1) {
         prev.classList.add('disabled');
     } else {
         next.classList.remove('disabled');
