@@ -1,8 +1,12 @@
+const labels = document.querySelectorAll('.label');
+const connectors = document.querySelectorAll('.connecter-bar');
+const prev = document.querySelector('#previous');
+const next = document.querySelector('#next');
 let progress = 1;
 
 renderProgress();
 
-document.querySelector('#previous').addEventListener('click', () => {
+prev.addEventListener('click', () => {
     if(progress > 1) {
         progress--;
     }
@@ -10,8 +14,8 @@ document.querySelector('#previous').addEventListener('click', () => {
     renderProgress('backward');
 });
 
-document.querySelector('#next').addEventListener('click', () => {
-    if(progress < 4) {
+next.addEventListener('click', () => {
+    if(progress < labels.length) {
         progress++;
     }
 
@@ -20,35 +24,35 @@ document.querySelector('#next').addEventListener('click', () => {
 
 function renderProgress(direction) {
     if(direction === 'backward') {
-        document.querySelectorAll('.label').forEach((lab, index) => {
+        labels.forEach((label, index) => {
             if(index >= progress) {
-                lab.classList.remove('progress');
+                label.classList.remove('progress');
             }
         });
-        document.querySelectorAll('.connecter').forEach((con, index) => {
+        connectors.forEach((connecter, index) => {
             if(index >= progress -1) {
-                con.classList.remove('progress');
+                connecter.classList.remove('progress-bar');
             }
         });
     } else {
-        document.querySelectorAll('.label').forEach((lab, index) => {
+        labels.forEach((label, index) => {
             if(index < progress) {
-                lab.classList.add('progress');
+                label.classList.add('progress');
             }
         });
-        document.querySelectorAll('.connecter').forEach((con, index) => {
+        connectors.forEach((connecter, index) => {
             if(index < progress - 1) {
-                con.classList.add('progress');
+                connecter.classList.add('progress-bar');
             }
         });
     }
 
     if(progress === 4) {
-        document.querySelector('#next').classList.add('disabled');
+        next.classList.add('disabled');
     }else if(progress === 1) {
-        document.querySelector('#previous').classList.add('disabled');
+        prev.classList.add('disabled');
     } else {
-        document.querySelector('#next').classList.remove('disabled');
-        document.querySelector('#previous').classList.remove('disabled');
+        next.classList.remove('disabled');
+        prev.classList.remove('disabled');
     }
 }
